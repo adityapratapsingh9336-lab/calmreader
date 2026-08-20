@@ -1,0 +1,207 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-color: #0f172a;
+    --text-color: #f8fafc;
+    --card-bg: #1e293b;
+    --border-color: #334155;
+    --font-family: 'Lexend', sans-serif;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* Theme Color Presets */
+.theme-default {
+  --bg-color: #0f172a;
+  --text-color: #f8fafc;
+  --card-bg: #1e293b;
+  --border-color: #334155;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.theme-sepia {
+  --bg-color: #fbf0d9;
+  --text-color: #2c221e;
+  --card-bg: #f4e3c1;
+  --border-color: #e2cfa7;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.theme-dark {
+  --bg-color: #050505;
+  --text-color: #e2e8f0;
+  --card-bg: #121212;
+  --border-color: #27272a;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.theme-blue {
+  --bg-color: #0f172a;
+  --text-color: #e0f2fe;
+  --card-bg: #1e293b;
+  --border-color: #38bdf8;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Directional Letter Disambiguation Micro-Anchors */
+.anchor-container {
+  display: inline-block;
+  position: relative;
+  font-weight: 600;
+}
+
+.anchor-b {
+  color: #f59e0b; /* Amber */
+  border-left: 2.5px solid #f59e0b;
+  padding-left: 2px;
+  margin-left: 1px;
+  border-top-left-radius: 3px;
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.anchor-d {
+  color: #06b6d4; /* Cyan */
+  border-right: 2.5px solid #06b6d4;
+  padding-right: 2px;
+  margin-right: 1px;
+  border-top-right-radius: 3px;
+  background: rgba(6, 182, 212, 0.12);
+}
+
+.anchor-p {
+  color: #ec4899; /* Pink */
+  border-left: 2.5px solid #ec4899;
+  border-bottom: 2px solid #ec4899;
+  padding-left: 2px;
+  background: rgba(236, 72, 153, 0.12);
+}
+
+.anchor-q {
+  color: #10b981; /* Emerald */
+  border-right: 2.5px solid #10b981;
+  border-bottom: 2px solid #10b981;
+  padding-right: 2px;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+/* Directional & Sequence Support Module Styling */
+.margin-start-anchor {
+  display: inline-flex;
+  items-align: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  background-color: #10b981;
+  color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+  margin-right: 8px;
+  vertical-align: middle;
+  font-size: 8px;
+}
+
+.sequence-badge {
+  display: inline-block;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #818cf8;
+  font-size: 0.75em;
+  font-weight: 700;
+  font-family: monospace;
+  padding: 1px 6px;
+  border-radius: 6px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.scan-arrow {
+  color: rgba(148, 163, 184, 0.4);
+  font-size: 0.8em;
+  margin: 0 3px;
+  user-select: none;
+}
+
+/* Color-Coded Directional Indicators (Left = Blue, Right = Red) */
+.direction-left {
+  background-color: rgba(59, 130, 246, 0.18) !important;
+  color: #60a5fa !important;
+  border: 1px solid rgba(59, 130, 246, 0.4) !important;
+  border-left: 3px solid #3b82f6 !important;
+  border-radius: 4px;
+  padding: 1px 4px;
+  font-weight: 700;
+}
+
+.direction-right {
+  background-color: rgba(239, 68, 68, 0.18) !important;
+  color: #f87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.4) !important;
+  border-right: 3px solid #ef4444 !important;
+  border-radius: 4px;
+  padding: 1px 4px;
+  font-weight: 700;
+}
+
+/* TTS Speaking Word Highlight */
+.word-speaking {
+  background-color: #6366f1 !important;
+  color: #ffffff !important;
+  border-radius: 4px;
+  padding: 2px 4px;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+}
+
+/* Interactive Word Hover & Click */
+.reader-word {
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-block;
+}
+
+.reader-word:hover {
+  background-color: rgba(99, 102, 241, 0.2);
+  border-radius: 3px;
+  transform: translateY(-1px);
+}
+
+/* Optical Focus Spotlight Overlay */
+.focus-line-dimmed {
+  opacity: 0.70;
+  transition: opacity 0.2s ease;
+}
+
+.focus-line-active {
+  opacity: 1;
+  filter: blur(0);
+  background: rgba(99, 102, 241, 0.08);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}

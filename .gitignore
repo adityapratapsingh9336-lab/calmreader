@@ -1,0 +1,28 @@
+# Dependencies (do NOT commit to GitHub)
+node_modules/
+**/node_modules/
+
+# Production Build Outputs
+dist/
+build/
+**/dist/
+**/build/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.production
+**/.env
+
+# IDE & OS Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Log Files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
