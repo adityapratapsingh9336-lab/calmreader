@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 export default function ExplainModal({ word, contextSentence, onClose }) {
   const [data, setData] = useState(null);
@@ -13,7 +14,7 @@ export default function ExplainModal({ word, contextSentence, onClose }) {
     setError(null);
 
     // Call backend /api/explain API endpoint with fallback logic
-    fetch('/api/explain', {
+    fetch(`${API_BASE_URL}/api/explain`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ word, contextSentence }),

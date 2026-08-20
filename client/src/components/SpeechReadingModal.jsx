@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { alignReading } from '../utils/readingComparator';
 import { ttsService } from '../utils/tts';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 const PRESET_PRACTICE_SENTENCES = [
   {
@@ -241,12 +242,13 @@ export default function SpeechReadingModal({ defaultSentence = '', onClose }) {
   // Call Backend /api/analyze-reading with Audio FormData
   const analyzeAudioWithBackend = async (audioBlob) => {
     try {
+      const ext = audioBlob.type.includes('mp4') ? 'mp4' : audioBlob.type.includes('ogg') ? 'ogg' : audioBlob.type.includes('wav') ? 'wav' : 'webm';
       const formData = new FormData();
-      formData.append('audio', audioBlob, 'reading.webm');
+      formData.append('audio', audioBlob, `reading.${ext}`);
       formData.append('originalText', selectedSentence);
       formData.append('spokenText', liveSpokenText);
 
-      const response = await fetch('/api/analyze-reading', {
+      const response = await fetch(`${API_BASE_URL}/api/analyze-reading`, {
         method: 'POST',
         body: formData,
       });

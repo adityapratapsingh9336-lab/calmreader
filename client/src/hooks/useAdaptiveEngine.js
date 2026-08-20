@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { telemetryTracker } from '../utils/telemetryTracker';
 import { evaluateAdaptation, PROFILE_TYPES } from '../utils/adaptationEngine';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 export function useAdaptiveEngine(text, initialSettings) {
   const [settings, setSettings] = useState(initialSettings);
@@ -26,7 +27,7 @@ export function useAdaptiveEngine(text, initialSettings) {
       setProfileType(adaptation.profileType);
 
       // Sync telemetry metrics to backend server
-      fetch('/api/telemetry', {
+      fetch(`${API_BASE_URL}/api/telemetry`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

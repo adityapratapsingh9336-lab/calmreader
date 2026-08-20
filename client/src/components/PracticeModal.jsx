@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 export default function PracticeModal({ passageText, onClose }) {
   const [questions, setQuestions] = useState([]);
@@ -13,7 +14,7 @@ export default function PracticeModal({ passageText, onClose }) {
     let isMounted = true;
     setLoading(true);
 
-    fetch('/api/generate-mcq', {
+    fetch(`${API_BASE_URL}/api/generate-mcq`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ passageText }),

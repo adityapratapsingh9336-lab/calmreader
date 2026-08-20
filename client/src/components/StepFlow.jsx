@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DirectionCard from './DirectionCard';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 export default function StepFlow({ text, onClose }) {
   const [steps, setSteps] = useState([]);
@@ -12,7 +13,7 @@ export default function StepFlow({ text, onClose }) {
     let isMounted = true;
     setLoading(true);
 
-    fetch('/api/simplify-directions', {
+    fetch(`${API_BASE_URL}/api/simplify-directions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text }),
