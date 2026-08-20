@@ -11,6 +11,7 @@ import StepByStepView from './components/StepByStepView';
 import SequenceTrainingModal from './components/SequenceTrainingModal';
 import StepFlow from './components/StepFlow';
 import DirectionTrainer from './components/DirectionTrainer';
+import SpeechReadingModal from './components/SpeechReadingModal';
 import { useAdaptiveEngine } from './hooks/useAdaptiveEngine';
 import { ttsService } from './utils/tts';
 
@@ -66,6 +67,7 @@ export default function App() {
   const [isReorderOpen, setIsReorderOpen] = useState(false);
   const [isStepFlowOpen, setIsStepFlowOpen] = useState(false);
   const [isDirectionTrainerOpen, setIsDirectionTrainerOpen] = useState(false);
+  const [isSpeechModalOpen, setIsSpeechModalOpen] = useState(false);
   const [selectedWordData, setSelectedWordData] = useState(null);
 
   // Default Baseline Settings
@@ -143,6 +145,7 @@ export default function App() {
               onOpenReorder={() => setIsReorderOpen(true)}
               onOpenStepFlow={() => setIsStepFlowOpen(true)}
               onOpenDirectionTrainer={() => setIsDirectionTrainerOpen(true)}
+              onOpenSpeechModal={() => setIsSpeechModalOpen(true)}
               isAutoEnabled={isAutoEnabled}
               onToggleAutoAdapt={toggleAutoAdapt}
               profileType={profileType}
@@ -211,6 +214,15 @@ export default function App() {
             {isDirectionTrainerOpen && (
               <DirectionTrainer
                 onClose={() => setIsDirectionTrainerOpen(false)}
+              />
+            )}
+
+            {isSpeechModalOpen && (
+              <SpeechReadingModal
+                defaultSentence={
+                  text ? text.split(/(?<=[.!?])\s+/).filter(Boolean)[0] : ''
+                }
+                onClose={() => setIsSpeechModalOpen(false)}
               />
             )}
 

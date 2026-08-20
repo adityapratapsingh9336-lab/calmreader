@@ -13,6 +13,7 @@ export default function Controls({
   onOpenReorder,
   onOpenStepFlow,
   onOpenDirectionTrainer,
+  onOpenSpeechModal,
   isAutoEnabled,
   onToggleAutoAdapt,
   profileType
@@ -37,16 +38,26 @@ export default function Controls({
 
         {/* Center: Core Adaptive Controls */}
         <div className="flex items-center space-x-4 flex-wrap">
+          {/* Real-time Speech Detection Read Aloud Coach */}
+          <button
+            onClick={onOpenSpeechModal}
+            className="flex items-center space-x-1.5 text-xs font-bold px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 text-white shadow-lg shadow-emerald-600/25 transition-all transform hover:scale-[1.02] cursor-pointer"
+            title="Open Real-Time Speech Detection & Reading Coach (Groq Whisper-v3)"
+          >
+            <span className="text-sm">🎤</span>
+            <span>Read Aloud AI Coach</span>
+          </button>
+
           {/* TTS Play / Stop */}
           <button
             onClick={onToggleTTS}
-            className={`flex items-center space-x-2 text-xs font-semibold px-4 py-2 rounded-lg transition-all ${
+            className={`flex items-center space-x-2 text-xs font-semibold px-4 py-2 rounded-xl transition-all ${
               isPlaying
                 ? 'bg-rose-500 hover:bg-rose-600 text-white shadow-lg shadow-rose-500/20'
                 : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20'
             }`}
           >
-            <span>{isPlaying ? '⏹ Stop Speech' : '▶ Speak Synced Audio'}</span>
+            <span>{isPlaying ? '⏹ Stop Speech' : '▶ Model Audio'}</span>
           </button>
 
           {/* AI Auto Adaptation Toggle */}
@@ -59,7 +70,7 @@ export default function Controls({
             }`}
             title="Toggle Autonomous AI Layout Adaptation"
           >
-            <span>🤖 AI Auto-Adapt: {isAutoEnabled ? 'ON' : 'OFF'}</span>
+            <span>🤖 AI Auto: {isAutoEnabled ? 'ON' : 'OFF'}</span>
           </button>
 
           {/* Directional Anchor Toggle */}
@@ -103,7 +114,7 @@ export default function Controls({
             className="flex items-center space-x-1 text-xs font-semibold bg-sky-600/20 hover:bg-sky-600/30 text-sky-300 px-3 py-2 rounded-lg border border-sky-500/40 transition-colors"
             title="Open AI Direction & Step Flow Simplifier"
           >
-            <span>🧠 AI Flow</span>
+            <span>🧠 Flow</span>
           </button>
 
           <button
@@ -119,7 +130,7 @@ export default function Controls({
             className="flex items-center space-x-1 text-xs font-semibold bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 px-3 py-2 rounded-lg border border-indigo-500/40 transition-colors"
             title="Open Step-by-Step Focus Mode"
           >
-            <span>🧩 Step Mode</span>
+            <span>🧩 Steps</span>
           </button>
 
           <button
@@ -157,3 +168,4 @@ export default function Controls({
     </header>
   );
 }
+

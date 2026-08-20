@@ -6,6 +6,7 @@ import practiceRouter from './routes/practice.js';
 import profileRouter from './routes/profile.js';
 import telemetryRouter from './routes/telemetry.js';
 import directionSimplifierRouter from './routes/directionSimplifier.js';
+import speechReadingRouter from './routes/speechReading.js';
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ app.use('/api/generate-mcq', practiceRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/telemetry', telemetryRouter);
 app.use('/api/simplify-directions', directionSimplifierRouter);
+app.use('/api/analyze-reading', speechReadingRouter);
+app.use('/analyze-reading', speechReadingRouter);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
