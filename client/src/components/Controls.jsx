@@ -15,6 +15,8 @@ export default function Controls({
   onOpenDirectionTrainer,
   onOpenSpeechModal,
   onOpenMathStudio,
+  onOpenNumberSense,
+  onOpenTracingStudio,
   isAutoEnabled,
   onToggleAutoAdapt,
   profileType
@@ -27,7 +29,7 @@ export default function Controls({
         <div className="flex items-center space-x-3">
           <span className="text-xl">👁️</span>
           <span className="font-bold text-sm bg-gradient-to-r from-indigo-400 to-sky-400 bg-clip-text text-transparent hidden sm:inline">
-            LexiSight AI
+            Cogni-Read AI
           </span>
           <button
             onClick={onResetText}
@@ -39,6 +41,26 @@ export default function Controls({
 
         {/* Center: Core Adaptive Controls */}
         <div className="flex items-center space-x-3 flex-wrap">
+          {/* Writing & Tracing Studio Button */}
+          <button
+            onClick={onOpenTracingStudio}
+            className="flex items-center space-x-1.5 text-xs font-bold px-4 py-2 rounded-xl bg-gradient-to-r from-teal-600 via-emerald-600 to-sky-600 hover:from-teal-500 hover:to-sky-500 text-white shadow-lg shadow-teal-600/25 transition-all transform hover:scale-[1.02] cursor-pointer"
+            title="Open Writing & Tracing Motor Memory Studio (Letters, Numbers, Shapes, b/d Drills)"
+          >
+            <span className="text-sm">✍️</span>
+            <span>Tracing Studio</span>
+          </button>
+
+          {/* Number Sense & Numerosity Lab Button */}
+          <button
+            onClick={onOpenNumberSense}
+            className="flex items-center space-x-1.5 text-xs font-bold px-4 py-2 rounded-xl bg-gradient-to-r from-sky-600 via-indigo-600 to-emerald-600 hover:from-sky-500 hover:to-emerald-500 text-white shadow-lg shadow-sky-600/25 transition-all transform hover:scale-[1.02] cursor-pointer"
+            title="Open 12-Level Numerosity & Number Sense Training Module"
+          >
+            <span className="text-sm">🔢</span>
+            <span>Number Sense</span>
+          </button>
+
           {/* Dyscalculia Math Studio Button */}
           <button
             onClick={onOpenMathStudio}

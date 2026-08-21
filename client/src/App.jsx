@@ -13,6 +13,8 @@ import StepFlow from './components/StepFlow';
 import DirectionTrainer from './components/DirectionTrainer';
 import SpeechReadingModal from './components/SpeechReadingModal';
 import MathStudio from './components/math/MathStudio';
+import NumberSenseStudio from './modules/number-sense/NumberSenseStudio';
+import WritingTracingStudio from './modules/writing-tracing/WritingTracingStudio';
 import { useAdaptiveEngine } from './hooks/useAdaptiveEngine';
 import { ttsService } from './utils/tts';
 
@@ -70,6 +72,8 @@ export default function App() {
   const [isDirectionTrainerOpen, setIsDirectionTrainerOpen] = useState(false);
   const [isSpeechModalOpen, setIsSpeechModalOpen] = useState(false);
   const [isMathStudioOpen, setIsMathStudioOpen] = useState(false);
+  const [isNumberSenseOpen, setIsNumberSenseOpen] = useState(false);
+  const [isTracingStudioOpen, setIsTracingStudioOpen] = useState(false);
   const [selectedWordData, setSelectedWordData] = useState(null);
 
   // Default Baseline Settings
@@ -133,6 +137,8 @@ export default function App() {
             <Upload
               onTextLoaded={(loadedText) => setText(loadedText)}
               onOpenMathStudio={() => setIsMathStudioOpen(true)}
+              onOpenNumberSense={() => setIsNumberSenseOpen(true)}
+              onOpenTracingStudio={() => setIsTracingStudioOpen(true)}
             />
           </div>
         ) : (
@@ -152,6 +158,8 @@ export default function App() {
               onOpenDirectionTrainer={() => setIsDirectionTrainerOpen(true)}
               onOpenSpeechModal={() => setIsSpeechModalOpen(true)}
               onOpenMathStudio={() => setIsMathStudioOpen(true)}
+              onOpenNumberSense={() => setIsNumberSenseOpen(true)}
+              onOpenTracingStudio={() => setIsTracingStudioOpen(true)}
               isAutoEnabled={isAutoEnabled}
               onToggleAutoAdapt={toggleAutoAdapt}
               profileType={profileType}
@@ -234,6 +242,14 @@ export default function App() {
 
             {isMathStudioOpen && (
               <MathStudio onClose={() => setIsMathStudioOpen(false)} />
+            )}
+
+            {isNumberSenseOpen && (
+              <NumberSenseStudio onClose={() => setIsNumberSenseOpen(false)} />
+            )}
+
+            {isTracingStudioOpen && (
+              <WritingTracingStudio onClose={() => setIsTracingStudioOpen(false)} />
             )}
 
             <AdaptationToast message={toastMessage} onDismiss={dismissToast} />
