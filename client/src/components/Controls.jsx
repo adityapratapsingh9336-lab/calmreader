@@ -14,6 +14,7 @@ export default function Controls({
   onOpenStepFlow,
   onOpenDirectionTrainer,
   onOpenSpeechModal,
+  onOpenMathStudio,
   isAutoEnabled,
   onToggleAutoAdapt,
   profileType
@@ -37,7 +38,17 @@ export default function Controls({
         </div>
 
         {/* Center: Core Adaptive Controls */}
-        <div className="flex items-center space-x-4 flex-wrap">
+        <div className="flex items-center space-x-3 flex-wrap">
+          {/* Dyscalculia Math Studio Button */}
+          <button
+            onClick={onOpenMathStudio}
+            className="flex items-center space-x-1.5 text-xs font-bold px-4 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white shadow-lg shadow-amber-600/25 transition-all transform hover:scale-[1.02] cursor-pointer"
+            title="Open Dyscalculia Adaptive Math Learning Studio (Number Line, CRA Blocks, Counters)"
+          >
+            <span className="text-sm">🧮</span>
+            <span>Math Studio</span>
+          </button>
+
           {/* Real-time Speech Detection Read Aloud Coach */}
           <button
             onClick={onOpenSpeechModal}

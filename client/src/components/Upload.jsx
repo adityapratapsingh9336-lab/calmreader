@@ -12,7 +12,7 @@ const SAMPLE_PASSAGES = [
   }
 ];
 
-export default function Upload({ onTextLoaded }) {
+export default function Upload({ onTextLoaded, onOpenMathStudio }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
@@ -53,12 +53,46 @@ export default function Upload({ onTextLoaded }) {
     <div className="max-w-4xl mx-auto p-6 space-y-8 my-auto">
       <div className="text-center space-y-3">
         <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-transparent">
-          Visual Cognition Adaptation Reader
+          Adaptive Learning System for Dyslexia & Dyscalculia
         </h1>
         <p className="text-slate-400 text-sm max-w-xl mx-auto">
-          Upload an image, scan, or paste text to transform standard layout into an anti-crowded, directionally anchored reading viewport.
+          Multi-modal cognitive adaptation platform: anti-crowded reading canvas, speech detection coach, and spatial math learning studio.
         </p>
       </div>
+
+      {/* Dyscalculia Math Studio Quick Launch Banner */}
+      {onOpenMathStudio && (
+        <div
+          onClick={onOpenMathStudio}
+          className="bg-gradient-to-r from-amber-950/40 via-slate-900 to-indigo-950/40 border border-amber-500/40 hover:border-amber-400 p-5 rounded-2xl flex items-center justify-between gap-4 cursor-pointer transition-all shadow-xl hover:shadow-amber-500/10 group"
+        >
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-2xl text-amber-300 shadow-md">
+              🧮
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <h3 className="font-bold text-sm text-white group-hover:text-amber-300 transition-colors">
+                  Dyscalculia Math Learning Studio
+                </h3>
+                <span className="text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30">
+                  New Module
+                </span>
+              </div>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Explore Spatial Number Lines, CRA Place-Value Blocks, and Ten-Frame visual counters.
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="px-4 py-2 bg-gradient-to-r from-amber-600 to-orange-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-amber-600/20 whitespace-nowrap"
+          >
+            Launch Math Studio ➔
+          </button>
+        </div>
+      )}
 
       {/* Preset Demo Sample Buttons */}
       <div className="space-y-3">

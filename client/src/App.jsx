@@ -12,6 +12,7 @@ import SequenceTrainingModal from './components/SequenceTrainingModal';
 import StepFlow from './components/StepFlow';
 import DirectionTrainer from './components/DirectionTrainer';
 import SpeechReadingModal from './components/SpeechReadingModal';
+import MathStudio from './components/math/MathStudio';
 import { useAdaptiveEngine } from './hooks/useAdaptiveEngine';
 import { ttsService } from './utils/tts';
 
@@ -68,6 +69,7 @@ export default function App() {
   const [isStepFlowOpen, setIsStepFlowOpen] = useState(false);
   const [isDirectionTrainerOpen, setIsDirectionTrainerOpen] = useState(false);
   const [isSpeechModalOpen, setIsSpeechModalOpen] = useState(false);
+  const [isMathStudioOpen, setIsMathStudioOpen] = useState(false);
   const [selectedWordData, setSelectedWordData] = useState(null);
 
   // Default Baseline Settings
@@ -128,7 +130,10 @@ export default function App() {
       <ErrorBoundary onReset={handleResetText}>
         {!text ? (
           <div className="flex-1 flex items-center justify-center">
-            <Upload onTextLoaded={(loadedText) => setText(loadedText)} />
+            <Upload
+              onTextLoaded={(loadedText) => setText(loadedText)}
+              onOpenMathStudio={() => setIsMathStudioOpen(true)}
+            />
           </div>
         ) : (
           <>
@@ -146,6 +151,7 @@ export default function App() {
               onOpenStepFlow={() => setIsStepFlowOpen(true)}
               onOpenDirectionTrainer={() => setIsDirectionTrainerOpen(true)}
               onOpenSpeechModal={() => setIsSpeechModalOpen(true)}
+              onOpenMathStudio={() => setIsMathStudioOpen(true)}
               isAutoEnabled={isAutoEnabled}
               onToggleAutoAdapt={toggleAutoAdapt}
               profileType={profileType}
@@ -224,6 +230,10 @@ export default function App() {
                 }
                 onClose={() => setIsSpeechModalOpen(false)}
               />
+            )}
+
+            {isMathStudioOpen && (
+              <MathStudio onClose={() => setIsMathStudioOpen(false)} />
             )}
 
             <AdaptationToast message={toastMessage} onDismiss={dismissToast} />
