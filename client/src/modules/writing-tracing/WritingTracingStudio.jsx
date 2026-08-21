@@ -298,7 +298,7 @@ export default function WritingTracingStudio({ onClose }) {
         {/* Footer */}
         <div className="flex items-center justify-between border-t border-slate-800 pt-4">
           <div className="text-xs text-slate-500">
-            Multi-Sensory Motor Memory Training System (Cogni-Read)
+            Multi-Sensory Motor Memory Training System (LexiSight)
           </div>
 
           <button

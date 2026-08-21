@@ -29,7 +29,7 @@ export default function Controls({
         <div className="flex items-center space-x-3">
           <span className="text-xl">👁️</span>
           <span className="font-bold text-sm bg-gradient-to-r from-indigo-400 to-sky-400 bg-clip-text text-transparent hidden sm:inline">
-            Cogni-Read AI
+            LexiSight AI
           </span>
           <button
             onClick={onResetText}

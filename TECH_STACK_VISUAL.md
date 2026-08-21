@@ -1,4 +1,4 @@
-# ⚡ Visual Tech Stack & System Architecture — Cogni-Read AI
+# ⚡ Visual Tech Stack & System Architecture — LexiSight AI
 
 ```
 ====================================================================================================

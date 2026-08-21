@@ -53,7 +53,7 @@ export default function Upload({ onTextLoaded, onOpenMathStudio, onOpenNumberSen
     <div className="max-w-4xl mx-auto p-6 space-y-8 my-auto">
       <div className="text-center space-y-3">
         <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-transparent">
-          Cogni-Read Adaptive Learning System
+          LexiSight Adaptive Learning System
         </h1>
         <p className="text-slate-400 text-sm max-w-xl mx-auto">
           Comprehensive multi-modal platform: anti-crowded reading canvas, speech reading coach, numerosity training lab, and motor memory writing studio.
