@@ -225,35 +225,36 @@ export default function App() {
               />
             )}
 
-            {isDirectionTrainerOpen && (
-              <DirectionTrainer
-                onClose={() => setIsDirectionTrainerOpen(false)}
-              />
-            )}
-
-            {isSpeechModalOpen && (
-              <SpeechReadingModal
-                defaultSentence={
-                  text ? text.split(/(?<=[.!?])\s+/).filter(Boolean)[0] : ''
-                }
-                onClose={() => setIsSpeechModalOpen(false)}
-              />
-            )}
-
-            {isMathStudioOpen && (
-              <MathStudio onClose={() => setIsMathStudioOpen(false)} />
-            )}
-
-            {isNumberSenseOpen && (
-              <NumberSenseStudio onClose={() => setIsNumberSenseOpen(false)} />
-            )}
-
-            {isTracingStudioOpen && (
-              <WritingTracingStudio onClose={() => setIsTracingStudioOpen(false)} />
-            )}
-
             <AdaptationToast message={toastMessage} onDismiss={dismissToast} />
           </>
+        )}
+
+        {/* Global Independent Studios & Modals (Accessible from both Home screen & Reader screen) */}
+        {isMathStudioOpen && (
+          <MathStudio onClose={() => setIsMathStudioOpen(false)} />
+        )}
+
+        {isNumberSenseOpen && (
+          <NumberSenseStudio onClose={() => setIsNumberSenseOpen(false)} />
+        )}
+
+        {isTracingStudioOpen && (
+          <WritingTracingStudio onClose={() => setIsTracingStudioOpen(false)} />
+        )}
+
+        {isDirectionTrainerOpen && (
+          <DirectionTrainer
+            onClose={() => setIsDirectionTrainerOpen(false)}
+          />
+        )}
+
+        {isSpeechModalOpen && (
+          <SpeechReadingModal
+            defaultSentence={
+              text ? text.split(/(?<=[.!?])\s+/).filter(Boolean)[0] : ''
+            }
+            onClose={() => setIsSpeechModalOpen(false)}
+          />
         )}
       </ErrorBoundary>
     </div>
