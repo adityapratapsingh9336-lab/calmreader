@@ -46,7 +46,7 @@ export default function WritingTracingStudio({ onClose }) {
   };
 
   const handleEvaluate = () => {
-    const result = evaluateDrawnStrokes(drawnPointsRef.current, currentTemplate);
+    const result = evaluateDrawnStrokes(drawnPointsRef.current, currentTemplate, brushSize);
     setEvaluationResult(result);
   };
 

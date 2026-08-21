@@ -145,6 +145,7 @@ export default function TracingCanvas({
         template={template}
         isGuidedMode={isGuidedMode}
         isGhostDemoActive={isGhostDemoActive}
+        brushSize={brushSize}
       />
 
       {/* Interactive HTML5 Drawing Canvas */}

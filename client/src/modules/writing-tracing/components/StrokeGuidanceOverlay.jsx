@@ -1,7 +1,9 @@
 import React from 'react';
 
-export default function StrokeGuidanceOverlay({ template, isGhostDemoActive, isGuidedMode }) {
+export default function StrokeGuidanceOverlay({ template, isGhostDemoActive, isGuidedMode, brushSize = 12 }) {
   const strokes = template?.strokes || [];
+  const outerCorridorWidth = Math.round(22 + brushSize * 1.2);
+  const innerCorridorWidth = Math.round(18 + brushSize * 0.8);
 
   return (
     <svg
@@ -55,7 +57,7 @@ export default function StrokeGuidanceOverlay({ template, isGhostDemoActive, isG
         Baseline
       </text>
 
-      {/* Dotted Reference Template Path & Visual Corridor Channel */}
+      {/* Dotted Reference Template Path & Visual Corridor Channel adapting to brush size */}
       {isGuidedMode && strokes.map((stroke, idx) => (
         <g key={`corridor-${idx}`}>
           {/* Allowable Tracing Corridor Channel */}
@@ -63,19 +65,19 @@ export default function StrokeGuidanceOverlay({ template, isGhostDemoActive, isG
             d={stroke.pathD}
             fill="none"
             stroke="#1e293b"
-            strokeWidth="32"
+            strokeWidth={outerCorridorWidth}
             strokeLinecap="round"
             strokeLinejoin="round"
-            opacity="0.8"
+            opacity="0.85"
           />
           <path
             d={stroke.pathD}
             fill="none"
-            stroke="#475569"
-            strokeWidth="28"
+            stroke="#334155"
+            strokeWidth={innerCorridorWidth}
             strokeLinecap="round"
             strokeLinejoin="round"
-            opacity="0.4"
+            opacity="0.45"
           />
         </g>
       ))}

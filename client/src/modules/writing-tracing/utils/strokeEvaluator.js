@@ -1,7 +1,7 @@
 /**
- * Stroke Accuracy & Geometric Path Corridor Evaluator
- * Samples exact SVG reference path coordinates and computes bidirectional Chamfer corridor accuracy,
- * out-of-bounds stray penalties, and stroke completeness.
+ * Adaptive Stroke Accuracy & Geometric Path Corridor Evaluator
+ * Dynamically adjusts allowable tracing corridor with pen width,
+ * computes soft-distance in-corridor precision, and evaluates path coverage.
  */
 
 /**
@@ -44,46 +44,51 @@ export function sampleTemplatePathPoints(template, numSamplesPerStroke = 50) {
 
 /**
  * Evaluates user drawn canvas points against template reference path corridor.
+ * Dynamically scales corridor radius based on pen brush size.
  */
-export function evaluateDrawnStrokes(drawnPoints, template, corridorRadius = 26) {
-  if (!drawnPoints || drawnPoints.length < 15) {
+export function evaluateDrawnStrokes(drawnPoints, template, brushSize = 12) {
+  if (!drawnPoints || drawnPoints.length < 12) {
     return {
       accuracy: 0,
       coveragePercent: 0,
       inCorridorPercent: 0,
       isMastered: false,
       strayPointsCount: 0,
-      feedback: '⚠️ Not enough strokes detected. Trace along the full dotted guide to evaluate!',
+      feedback: '⚠️ Please trace along the letter shape to check your handwriting!',
     };
   }
 
-  const refPoints = sampleTemplatePathPoints(template, 40);
+  // Dynamic corridor tolerance: adjusts with pen width
+  // Fine (6px) -> 28px, Medium (12px) -> 34px, Broad (20px) -> 40px
+  const corridorRadius = Math.round(24 + (brushSize * 0.8));
+
+  const refPoints = sampleTemplatePathPoints(template, 45);
   if (refPoints.length === 0) {
     return {
-      accuracy: 85,
-      coveragePercent: 85,
-      inCorridorPercent: 85,
+      accuracy: 88,
+      coveragePercent: 88,
+      inCorridorPercent: 88,
       isMastered: true,
       strayPointsCount: 0,
-      feedback: 'Freehand drawing recorded!',
+      feedback: 'Great freehand drawing recorded!',
     };
   }
 
-  // 1. FORWARD CHECK: What % of reference path points were touched by user within corridorRadius?
+  // 1. FORWARD COVERAGE: What % of reference path points were traced within corridor?
   let coveredRefPointsCount = 0;
   refPoints.forEach((refPt) => {
     const isCovered = drawnPoints.some((uPt) => {
       const dist = Math.hypot(uPt.x - refPt.x, uPt.y - refPt.y);
-      return dist <= corridorRadius;
+      return dist <= corridorRadius + 4;
     });
     if (isCovered) coveredRefPointsCount++;
   });
 
   const coveragePercent = Math.round((coveredRefPointsCount / refPoints.length) * 100);
 
-  // 2. REVERSE CHECK: What % of user drawn points stayed INSIDE the allowable corridor?
-  // Out-of-bounds penalty (e.g. curving left instead of right)
-  let inCorridorUserPointsCount = 0;
+  // 2. REVERSE IN-CORRIDOR PRECISION: What % of drawn strokes stayed inside allowable zone?
+  // Uses soft continuous distance model so slight tremors/wobbles are forgivingly graded
+  let totalPrecisionScore = 0;
   let strayPointsCount = 0;
 
   drawnPoints.forEach((uPt) => {
@@ -94,40 +99,42 @@ export function evaluateDrawnStrokes(drawnPoints, template, corridorRadius = 26)
       if (dist <= corridorRadius) break;
     }
 
-    if (minDist <= corridorRadius + 6) {
-      inCorridorUserPointsCount++;
+    if (minDist <= corridorRadius) {
+      totalPrecisionScore += 1.0; // Perfect inside corridor
+    } else if (minDist <= corridorRadius + 16) {
+      // Soft margin for slight tremor
+      const softScore = Math.max(0.4, 1.0 - ((minDist - corridorRadius) / 20) * 0.6);
+      totalPrecisionScore += softScore;
     } else {
-      strayPointsCount++;
+      strayPointsCount++; // Out of bounds (e.g. wrong direction / reversed loop)
     }
   });
 
-  const inCorridorPercent = Math.round((inCorridorUserPointsCount / drawnPoints.length) * 100);
+  const inCorridorPercent = Math.min(100, Math.round((totalPrecisionScore / drawnPoints.length) * 100));
 
-  // 3. COMBINED ACCURACY CALCULATION
-  // High accuracy requires BOTH high coverage of the letter AND low stray out-of-bounds strokes!
-  let rawAccuracy = Math.round(coveragePercent * 0.55 + inCorridorPercent * 0.45);
+  // 3. COMBINED BALANCED ACCURACY
+  let compositeScore = Math.round(coveragePercent * 0.50 + inCorridorPercent * 0.50);
 
-  // Penalize heavily if user drew in the wrong direction or had massive out-of-bounds strokes
-  if (inCorridorPercent < 55) {
-    rawAccuracy = Math.min(rawAccuracy, inCorridorPercent);
-  }
-  if (coveragePercent < 60) {
-    rawAccuracy = Math.min(rawAccuracy, coveragePercent);
+  // Positive reinforcement bonus for good motor control
+  if (coveragePercent >= 70 && inCorridorPercent >= 70) {
+    compositeScore = Math.min(100, Math.round(compositeScore * 1.12));
+  } else if (inCorridorPercent < 50) {
+    compositeScore = Math.min(compositeScore, inCorridorPercent);
   }
 
-  const finalAccuracy = Math.max(0, Math.min(100, rawAccuracy));
-  const isMastered = finalAccuracy >= 78 && coveragePercent >= 75 && inCorridorPercent >= 70;
+  const finalAccuracy = Math.max(0, Math.min(100, compositeScore));
+  const isMastered = finalAccuracy >= 70 && coveragePercent >= 65 && inCorridorPercent >= 60;
 
-  // 4. DIAGNOSTIC EDUCATIONAL FEEDBACK
+  // 4. CHILD-FRIENDLY ACCESSIBILITY FEEDBACK
   let feedback = '';
   if (isMastered) {
-    feedback = '🌟 Outstanding accuracy! Your strokes stayed strictly inside the guide corridor and covered the full letter!';
-  } else if (inCorridorPercent < 60) {
-    feedback = `⚠️ Out of bounds! You strayed outside the guide (${100 - inCorridorPercent}% off-path). ${template.guideHint || 'Follow the dotted line direction carefully.'}`;
-  } else if (coveragePercent < 70) {
-    feedback = `⚠️ Incomplete trace (${coveragePercent}% covered). Make sure to trace all parts from start point ① to the end!`;
+    feedback = '🌟 Fantastic motor control! You traced the letter cleanly within the guide corridor!';
+  } else if (inCorridorPercent < 55) {
+    feedback = `💡 Keep your strokes inside the guide! ${template.guideHint || 'Follow the dotted path direction carefully.'}`;
+  } else if (coveragePercent < 65) {
+    feedback = `💡 Almost there! You covered ${coveragePercent}% of the letter. Make sure to trace from start dot ① all the way to the end!`;
   } else {
-    feedback = '👍 Good attempt! Try slowing down to keep your pen centered directly on the dotted midline.';
+    feedback = '👍 Good practice! Try following the green start dot ① in one smooth, continuous motion.';
   }
 
   return {
@@ -135,6 +142,7 @@ export function evaluateDrawnStrokes(drawnPoints, template, corridorRadius = 26)
     coveragePercent,
     inCorridorPercent,
     strayPointsCount,
+    corridorRadius,
     isMastered,
     feedback,
   };
